@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tiny_store/bloc/cart/cart_bloc.dart';
+import 'package:tiny_store/bloc/catalog/catalog_cubit.dart';
+import 'package:tiny_store/core/data/products_api_client.dart';
 import 'package:tiny_store/ui/commons.dart';
 import 'package:tiny_store/ui/screens/catalog/catalog.screen.dart';
 
@@ -16,6 +18,10 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => CartBloc()),
+        BlocProvider(
+          create: (_) =>
+              CatalogCubit(productsApiClient: ProductsApiClient())..start(),
+        ),
       ],
       child: const MyHomePage(),
     );

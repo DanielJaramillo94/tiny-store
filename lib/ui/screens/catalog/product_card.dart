@@ -24,6 +24,7 @@ class ProductCard extends StatelessWidget {
               product.imageUrl,
             ),
             Column(
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -36,11 +37,16 @@ class ProductCard extends StatelessWidget {
                           top: 8.0,
                           left: 8.0,
                         ),
-                        child: Text(
-                          product.name,
-                          style: const TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
+                        child: SizedBox(
+                          height: 35,
+                          child: Text(
+                            product.name,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
@@ -89,7 +95,6 @@ class ProductCard extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              // '\$120.000',
                               product.price.toString(),
                               style: const TextStyle(
                                 fontSize: 15,
