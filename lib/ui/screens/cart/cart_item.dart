@@ -18,11 +18,7 @@ class CartItem extends StatelessWidget {
           Radio<String>(
             value: "Lafayette",
             groupValue: option,
-            onChanged: (String? value) {
-              // setState(() {
-              //   option = value;
-              // });
-            },
+            onChanged: (String? value) {},
             activeColor: Colors.red[700],
           ),
           Image.network(
@@ -35,7 +31,7 @@ class CartItem extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                children: const [
                   SizedBox(
                     width: 130,
                     child: Text(

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:tiny_store/core/models/product.model.dart';
 import 'package:tiny_store/ui/commons.dart';
 
 class ProductCard extends StatelessWidget {
-  final String productName;
+  final Product product;
 
   const ProductCard({
     Key? key,
-    this.productName = 'Lorem Ipsum Dorma Torda',
+    required this.product,
   }) : super(key: key);
 
   @override
@@ -20,7 +21,7 @@ class ProductCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Image.network(
-              'https://as2.ftcdn.net/v2/jpg/03/03/92/01/1000_F_303920112_Qg6w8w2Brjnqex7AGJpsZlaI8IWa1lzH.jpg',
+              product.imageUrl,
             ),
             Column(
               children: [
@@ -36,7 +37,7 @@ class ProductCard extends StatelessWidget {
                           left: 8.0,
                         ),
                         child: Text(
-                          productName,
+                          product.name,
                           style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
@@ -57,9 +58,9 @@ class ProductCard extends StatelessWidget {
                             color: Colors.yellow[800],
                           ),
                           const SizedBox(width: 1),
-                          const Text(
-                            '(4.5)',
-                            style: TextStyle(
+                          Text(
+                            '(${product.rating})',
+                            style: const TextStyle(
                               color: Colors.black45,
                             ),
                           ),
@@ -79,17 +80,18 @@ class ProductCard extends StatelessWidget {
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
+                          children: [
                             Text(
-                              'Lorem Ipsum Dorma Torda',
-                              style: TextStyle(
+                              product.description,
+                              style: const TextStyle(
                                 fontSize: 10,
                                 color: Colors.black45,
                               ),
                             ),
                             Text(
-                              '\$120.000',
-                              style: TextStyle(
+                              // '\$120.000',
+                              product.price.toString(),
+                              style: const TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w500,
                               ),
