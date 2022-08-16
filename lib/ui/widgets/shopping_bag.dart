@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tiny_store/bloc/cart/cart_bloc.dart';
+
 import 'package:tiny_store/ui/commons.dart';
 
 class ShoppingBag extends StatelessWidget {
@@ -11,6 +14,7 @@ class ShoppingBag extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cartBloc = context.watch<CartBloc>();
     return SizedBox(
       width: width,
       child: LayoutBuilder(
@@ -21,16 +25,19 @@ class ShoppingBag extends StatelessWidget {
             children: [
               Icon(
                 Icons.shopping_bag_outlined,
-                size: availableWidth,
+                size: availableWidth / 1.2,
                 color: Colors.black54,
               ),
               Align(
-                alignment: const Alignment(1, -0.2),
+                alignment: const Alignment(1, -0.3),
                 child: CircleAvatar(
                   radius: availableWidth / 3.8,
                   backgroundColor: baseColor[800],
                   child: Text(
-                    '8',
+                    cartBloc.state.when(
+                      empty: () => '0',
+                      data: (products) => products.length.toString(),
+                    ),
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: availableWidth / 3.5,

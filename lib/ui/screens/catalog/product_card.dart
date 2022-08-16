@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tiny_store/bloc/cart/cart_bloc.dart';
+
 import 'package:tiny_store/core/models/product.model.dart';
 import 'package:tiny_store/ui/commons.dart';
 
@@ -12,6 +15,11 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cartBloc = context.watch<CartBloc>();
+    bool inCart = cartBloc.state.when(
+      empty: () => false,
+      data: (products) => products.contains(product),
+    );
     return Card(
       elevation: 20,
       shadowColor: Colors.black54,
@@ -109,13 +117,15 @@ class ProductCard extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: InkWell(
                         onTap: () {
-                          print('Element clicked');
+                          inCart
+                              ? _removeProductFromCart(context)
+                              : _addProductFromCart(context);
                         },
                         child: CircleAvatar(
                           radius: 15,
                           backgroundColor: baseColor[800],
-                          child: const Icon(
-                            Icons.add,
+                          child: Icon(
+                            inCart ? Icons.delete : Icons.shopping_bag,
                             size: 18,
                             color: Colors.white70,
                           ),
@@ -130,5 +140,13 @@ class ProductCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _addProductFromCart(BuildContext context) {
+    return context.read<CartBloc>().add(CartEvent.productAdded(product));
+  }
+
+  void _removeProductFromCart(BuildContext context) {
+    return context.read<CartBloc>().add(CartEvent.productRemoved(product));
   }
 }

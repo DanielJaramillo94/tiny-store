@@ -14,6 +14,13 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   void _onProductAdded(_ProductAdded productAdded, Emitter<CartState> emit) {
     Product product = productAdded.product;
+    var currentProducts = state.when(
+      empty: () => List<Product>.empty(),
+      data: (products) => products,
+    );
+    if (currentProducts.contains(product)) {
+      return;
+    }
     emit(
       state.when(
         empty: () => CartState.data([product]),
