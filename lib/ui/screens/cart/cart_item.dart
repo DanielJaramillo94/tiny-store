@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tiny_store/bloc/cart/cart_bloc.dart';
+
+import 'package:tiny_store/core/models/product.model.dart';
 
 class CartItem extends StatelessWidget {
+  final Product product;
+
   const CartItem({
     super.key,
-    required this.option,
+    required this.product,
   });
-
-  final String? option;
 
   @override
   Widget build(BuildContext context) {
@@ -15,14 +19,15 @@ class CartItem extends StatelessWidget {
       height: 80,
       child: Row(
         children: [
-          Radio<String>(
-            value: "Lafayette",
-            groupValue: option,
-            onChanged: (String? value) {},
-            activeColor: Colors.red[700],
+          InkWell(
+            child: const Icon(
+              Icons.delete,
+              color: Colors.black54,
+            ),
+            onTap: () => _removeProductFromCart(context),
           ),
           Image.network(
-            'https://as2.ftcdn.net/v2/jpg/03/03/92/01/1000_F_303920112_Qg6w8w2Brjnqex7AGJpsZlaI8IWa1lzH.jpg',
+            product.imageUrl,
           ),
           Flexible(
             flex: 1,
@@ -30,23 +35,23 @@ class CartItem extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
                   SizedBox(
                     width: 130,
                     child: Text(
-                      'Lorem Ipsum Dorma Torda',
-                      style: TextStyle(
+                      product.name,
+                      style: const TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
                         color: Colors.black87,
                       ),
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 5),
                   Text(
-                    '\$120.000',
-                    style: TextStyle(
+                    product.price.toString(),
+                    style: const TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w500,
                       color: Colors.black54,
@@ -59,5 +64,9 @@ class CartItem extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  _removeProductFromCart(BuildContext context) {
+    return context.read<CartBloc>().add(CartEvent.productRemoved(product));
   }
 }

@@ -4,6 +4,7 @@ import 'package:tiny_store/bloc/cart/cart_bloc.dart';
 import 'package:tiny_store/bloc/catalog/catalog_cubit.dart';
 import 'package:tiny_store/core/data/products_api_client.dart';
 import 'package:tiny_store/ui/commons.dart';
+import 'package:tiny_store/ui/screens/cart/cart.screen.dart';
 import 'package:tiny_store/ui/screens/catalog/catalog.screen.dart';
 
 void main() {
@@ -39,7 +40,10 @@ class MyHomePage extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: MaterialColor(0xFF221a7e, baseColor),
       ),
-      home: const CatalogScreen(),
+      routes: {
+        '/': (_) => const CatalogScreen(),
+        '/cart': (_) => const CartScreen(),
+      },
     );
   }
 }
