@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tiny_store/bloc/cart/cart_bloc.dart';
 
 import 'package:tiny_store/core/models/product.model.dart';
+import 'package:tiny_store/core/utils/fomat.utils.dart';
 
 class CartItem extends StatelessWidget {
   final Product product;
@@ -50,7 +51,7 @@ class CartItem extends StatelessWidget {
                   ),
                   const SizedBox(height: 5),
                   Text(
-                    product.price.toString(),
+                    toCurrencyFormat(product.price),
                     style: const TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w500,
