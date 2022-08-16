@@ -7,7 +7,7 @@ part 'cart_state.dart';
 part 'cart_bloc.freezed.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
-  CartBloc() : super(const _Empty()) {
+  CartBloc() : super(const CartState.data([])) {
     on<_ProductAdded>(_onProductAdded);
     on<_ProductRemoved>(_onProductRemoved);
   }
@@ -15,7 +15,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   void _onProductAdded(_ProductAdded productAdded, Emitter<CartState> emit) {
     Product product = productAdded.product;
     var currentProducts = state.when(
-      empty: () => List<Product>.empty(),
       data: (products) => products,
     );
     if (currentProducts.contains(product)) {
@@ -23,7 +22,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     }
     emit(
       state.when(
-        empty: () => CartState.data([product]),
         data: (products) => CartState.data([...products, product]),
       ),
     );
@@ -34,7 +32,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     Product product = productAdded.product;
     emit(
       state.when(
-        empty: () => const CartState.empty(),
         data: (products) => CartState.data([...products]..remove(product)),
       ),
     );

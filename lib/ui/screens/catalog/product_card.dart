@@ -17,7 +17,6 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final cartBloc = context.watch<CartBloc>();
     bool inCart = cartBloc.state.when(
-      empty: () => false,
       data: (products) => products.contains(product),
     );
     return Card(

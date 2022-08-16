@@ -22,32 +22,33 @@ class CartScreen extends StatelessWidget {
             ),
           ),
           body: catalogState.when(
-            empty: () => Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Text(
-                    'El carrito se encuentra vacío',
-                    style: TextStyle(fontSize: 20, color: Colors.black54),
+            data: (products) => products.isEmpty
+                ? Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          'El carrito se encuentra vacío',
+                          style: TextStyle(fontSize: 20, color: Colors.black54),
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          ':(',
+                          style: TextStyle(fontSize: 20, color: Colors.black54),
+                        ),
+                      ],
+                    ),
+                  )
+                : Padding(
+                    padding: const EdgeInsets.only(left: 20),
+                    child: SingleChildScrollView(
+                      child: Column(
+                          children: List.generate(
+                        products.length,
+                        (index) => CartItem(product: products[index]),
+                      )),
+                    ),
                   ),
-                  SizedBox(height: 10),
-                  Text(
-                    ':(',
-                    style: TextStyle(fontSize: 20, color: Colors.black54),
-                  ),
-                ],
-              ),
-            ),
-            data: (products) => Padding(
-              padding: const EdgeInsets.only(left: 20),
-              child: SingleChildScrollView(
-                child: Column(
-                    children: List.generate(
-                  products.length,
-                  (index) => CartItem(product: products[index]),
-                )),
-              ),
-            ),
           ),
         );
       },

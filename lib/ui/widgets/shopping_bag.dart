@@ -37,7 +37,6 @@ class ShoppingBag extends StatelessWidget {
                     backgroundColor: baseColor[800],
                     child: Text(
                       cartBloc.state.when(
-                        empty: () => '0',
                         data: (products) => products.length.toString(),
                       ),
                       style: TextStyle(
