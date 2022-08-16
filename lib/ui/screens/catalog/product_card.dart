@@ -23,7 +23,10 @@ class ProductCard extends StatelessWidget {
       elevation: 20,
       shadowColor: Colors.black54,
       child: Container(
-        color: Colors.white,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10.0),
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -122,7 +125,8 @@ class ProductCard extends StatelessWidget {
                         },
                         child: CircleAvatar(
                           radius: 15,
-                          backgroundColor: baseColor[800],
+                          backgroundColor:
+                              inCart ? baseColor[500] : baseColor[800],
                           child: Icon(
                             inCart ? Icons.delete : Icons.shopping_bag,
                             size: 18,
