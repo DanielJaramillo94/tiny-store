@@ -1,4 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tiny_store/bloc/cart/cart_bloc.dart';
 import 'package:tiny_store/bloc/catalog/catalog_cubit.dart';
@@ -7,8 +11,17 @@ import 'package:tiny_store/ui/commons.dart';
 import 'package:tiny_store/ui/screens/cart/cart.screen.dart';
 import 'package:tiny_store/ui/screens/catalog/catalog.screen.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  var storage = await HydratedStorage.build(
+    storageDirectory: kIsWeb
+        ? HydratedStorage.webStorageDirectory
+        : await getTemporaryDirectory(),
+  );
+  HydratedBlocOverrides.runZoned(
+    () => runApp(const MyApp()),
+    storage: storage,
+  );
 }
 
 class MyApp extends StatelessWidget {

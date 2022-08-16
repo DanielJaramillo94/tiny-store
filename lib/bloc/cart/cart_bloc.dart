@@ -1,12 +1,13 @@
-import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:tiny_store/core/models/product.model.dart';
 
 part 'cart_event.dart';
 part 'cart_state.dart';
 part 'cart_bloc.freezed.dart';
+part 'cart_bloc.g.dart';
 
-class CartBloc extends Bloc<CartEvent, CartState> {
+class CartBloc extends HydratedBloc<CartEvent, CartState> {
   CartBloc() : super(const CartState.data([])) {
     on<_ProductAdded>(_onProductAdded);
     on<_ProductRemoved>(_onProductRemoved);
@@ -36,4 +37,10 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       ),
     );
   }
+
+  @override
+  CartState? fromJson(Map<String, dynamic> json) => CartState.fromJson(json);
+
+  @override
+  Map<String, dynamic>? toJson(CartState state) => state.toJson();
 }
